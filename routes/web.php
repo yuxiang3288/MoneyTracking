@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TngImportController;
 
 Route::get('/', function () {
     return view('wlc');
@@ -31,3 +32,5 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/tng/upload', [TngImportController::class, 'showForm'])->name('tng.upload');
+Route::post('/tng/parse', [TngImportController::class, 'parse'])->name('tng.parse');
