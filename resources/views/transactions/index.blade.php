@@ -81,7 +81,7 @@
                             <td class="border p-2">{{ $transaction->description }}</td>
                             <td
                                 class="border p-2 text-right {{ $transaction->type == 'income' ? 'text-green-600' : 'text-red-600' }}">
-                                {{ $transaction->type == 'income' ? '+' : '-' }} ${{ number_format($transaction->amount, 2) }}
+                                {{ $transaction->type == 'income' ? '+' : '-' }} {{$symbol}}{{ number_format($transaction->amount, 2) }}
                             </td>
                             <td class="border p-2">{{ ucfirst($transaction->type) }}</td>
                         </tr>

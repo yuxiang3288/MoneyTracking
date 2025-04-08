@@ -49,12 +49,16 @@ class TransactionController extends Controller
         $prevMonth = $currentDate->copy()->subMonth();
         $nextMonth = $currentDate->copy()->addMonth();
 
+        $currency = Auth::user()->preferred_currency ?? 'USD';
+        $symbol = currencySymbol($currency);
+        
         return view('transactions.index', [
             'transactions' => $transactions,
             'currentDate' => $currentDate,
             'prevMonth' => $prevMonth,
             'nextMonth' => $nextMonth,
             'titles' => $titles,
+            'symbol' => $symbol
         ]);
     }
 

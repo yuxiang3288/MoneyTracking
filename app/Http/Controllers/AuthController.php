@@ -72,7 +72,9 @@ class AuthController extends Controller
         $request->validate([
             // 'name' => 'required|string|max:255',
             // 'email' => 'required|email|unique:users,email,' . Auth::id(),
-            'phone_number' => 'nullable|string|max:20'
+            'phone_number' => 'nullable|string|max:20',
+            'date_birth' => 'nullable|date',
+            'preferred_currency' => 'nullable|string|max:10',
         ]);
 
         $user = Auth::user();
@@ -80,6 +82,8 @@ class AuthController extends Controller
             // 'name' => $request->name,
             // 'email' => $request->email,
             'phone_number' => $request->phone_number,
+            'date_birth' => $request->date_birth,
+            'preferred_currency' => $request->preferred_currency,
         ]);
 
         return back()->with('success', 'Profile updated successfully!');

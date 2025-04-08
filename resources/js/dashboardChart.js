@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
         monthlyEarning,
         monthlyLabels,
         yearlySpending,
-        yearlyEarning
+        yearlyEarning,
+        currencySymbol
     } = window.chartData;
 
     new Chart(document.getElementById('dailyChart'), {
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
             labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             datasets: [
                 {
-                    label: 'Spending ($)',
+                    label: `Spending (${currencySymbol})`,
                     data: dailySpending,
                     borderColor: 'rgb(239, 68, 68)',
                     backgroundColor: 'rgba(239, 68, 68)',
@@ -23,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     tension: 0.3
                 },
                 {
-                    label: 'Earning ($)',
+                    label: `Earning (${currencySymbol})`,
                     data: dailyEarning,
                     borderColor: 'rgb(34, 197, 94)',
                     backgroundColor: 'rgba(34, 197, 94)',
@@ -45,12 +46,12 @@ document.addEventListener('DOMContentLoaded', function () {
             labels: monthlyLabels,
             datasets: [
                 {
-                    label: 'Spending ($)',
+                    label: `Spending (${currencySymbol})`,
                     data: monthlySpending,
                     backgroundColor: 'rgb(239, 68, 68)'
                 },
                 {
-                    label: 'Earning ($)',
+                    label: `Earning (${currencySymbol})`,
                     data: monthlyEarning,
                     backgroundColor: 'rgba(34, 197, 94)'
                 }

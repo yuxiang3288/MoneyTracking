@@ -72,6 +72,8 @@ class DashboardController extends Controller
             $yearlyEarning = $yearlySpending;
         }
 
-        return view('dashboard', compact('dailySpending', 'dailyEarning', 'monthlySpending', 'monthlyEarning', 'monthlyLabels', 'yearlySpending', 'yearlyEarning'));
+        $currency = Auth::user()->preferred_currency ?? 'USD';
+        $symbol = currencySymbol($currency);
+        return view('dashboard', compact('dailySpending', 'dailyEarning', 'monthlySpending', 'monthlyEarning', 'monthlyLabels', 'yearlySpending', 'yearlyEarning', 'symbol'));
     }
 }

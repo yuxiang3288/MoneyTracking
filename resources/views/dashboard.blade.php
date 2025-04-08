@@ -3,6 +3,10 @@
 @section('title', 'Dashboard')
 
 @section('content')
+    @push('scripts')
+        @vite('resources/js/dashboardChart.js')
+    @endpush
+
     <h1 class="text-3xl font-semibold mb-6">≡ Dashboard</h1>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -39,15 +43,15 @@
             <div class="space-y-2 md:w-2/8 w-full text-sm">
                 <p class="flex justify-between text-red-600 font-semibold">
                     <span>Total Spending:</span>
-                    <span>${{ number_format($yearlySpending, 2) }}</span>
+                    <span>{{ $symbol }}{{ number_format($yearlySpending, 2) }}</span>
                 </p>
                 <p class="flex justify-between text-green-600 font-semibold">
                     <span>Total Earning:</span>
-                    <span>${{ number_format($yearlyEarning, 2) }}</span>
+                    <span>{{ $symbol }}{{ number_format($yearlyEarning, 2) }}</span>
                 </p>
                 <p class="flex justify-between text-blue-600 font-semibold">
                     <span>Remaining:</span>
-                    <span>${{ number_format($yearlyEarning - $yearlySpending, 2) }}</span>
+                    <span>{{ $symbol }}{{ number_format($yearlyEarning - $yearlySpending, 2) }}</span>
                 </p>
             </div>
         </div>
@@ -64,6 +68,7 @@
             monthlyLabels: @json($monthlyLabels ?? []),
             yearlySpending: @json($yearlySpending ?? 0),
             yearlyEarning: @json($yearlyEarning ?? 0),
+            currencySymbol: @json($symbol ?? '$')
         };
     </script>
 

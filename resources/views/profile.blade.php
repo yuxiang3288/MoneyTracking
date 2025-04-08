@@ -3,6 +3,10 @@
 @section('title', 'Personal Information')
 
 @section('content')
+    @push('scripts')
+        @vite('resources/js/currency.js')
+    @endpush
+
     <h1 class="text-3xl font-semibold mb-6">≡ Personal Information</h1>
 
     @if(session('success'))
@@ -31,6 +35,28 @@
             </p>
         </div>
 
+
+        <!-- One Time Edit: Date of Birth -->
+        <div>
+            <label for="date_birth" class="block text-sm font-medium mb-1">Date of Birth</label>
+            <input type="date" name="date_birth" id="date_birth" value="{{ old('date_birth', Auth::user()->date_birth) }}"
+                {{ Auth::user()->date_birth ? 'readonly' : '' }}
+                class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-100 {{ Auth::user()->date_birth ? 'cursor-not-allowed' : '' }}">
+        </div>
+
+        <!-- Editable Preferred Currency -->
+        <div>
+            <label for="preferred_currency" class="block text-sm font-medium mb-1">Preferred Currency</label>
+            <select name="preferred_currency" id="preferred_currency"
+                class="w-full border rounded p-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option value="">-- Select Currency --</option>
+            </select>
+        </div>
+
+        <script>
+            window.selectedCurrency = "{{ old('preferred_currency', Auth::user()->preferred_currency) }}";
+        </script>
+
         <!-- Editable Phone Number -->
         <div>
             <label for="phone_number" class="block text-sm font-medium mb-1">Phone Number</label>
@@ -40,8 +66,7 @@
         </div>
 
         <div class="text-right">
-            <button type="submit"
-                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                 Update
             </button>
         </div>
