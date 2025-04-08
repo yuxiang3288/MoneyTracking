@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
     Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
+
     Route::get('/profile', function () {
         return view('profile');
     })->name('profile');

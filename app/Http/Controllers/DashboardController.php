@@ -16,7 +16,6 @@ class DashboardController extends Controller
         $currentYear = Carbon::now()->year;
         $dayOfWeek = date('w', strtotime($today)); // 0 = Sunday
 
-        // Fix: subtract (w + 1) to always start from previous Sunday
         $startOfWeek = date('Y-m-d', strtotime("-" . ($dayOfWeek - 1) . " days", strtotime($today)));
 
         $weekDates = collect(range(0, 6))->map(function ($i) use ($startOfWeek) {
@@ -42,14 +41,13 @@ class DashboardController extends Controller
             ->whereYear('date', $currentYear)
             ->selectRaw('MONTH(date) as month, SUM(amount) as total')
             ->groupBy('month')
-            ->pluck('total', 'month'); // e.g., [1 => 1000, 3 => 400, 5 => 900]
-
+            ->pluck('total', 'month'); 
         $earningRawMonthly = Transaction::where('user_id', $userId)
             ->where('type', 'income')
             ->whereYear('date', $currentYear)
             ->selectRaw('MONTH(date) as month, SUM(amount) as total')
             ->groupBy('month')
-            ->pluck('total', 'month'); // e.g., [1 => 1000, 3 => 400, 5 => 900]
+            ->pluck('total', 'month'); 
 
         $dailySpending = $weekDates->map(fn(string $date): mixed => $spendingData[$date] ?? 0);
         $dailyEarning = $weekDates->map(fn(string $date): mixed => $earningData[$date] ?? 0);
@@ -68,7 +66,7 @@ class DashboardController extends Controller
 
 
         $yearlySpending = $monthlySpending->sum(); // total outcome this year
-        $yearlyEarning = $monthlyEarning->sum(); // total outcome this year
+        $yearlyEarning = $monthlyEarning->sum(); // total income this year
 
         if($yearlyEarning < $yearlySpending ){
             $yearlyEarning = $yearlySpending;

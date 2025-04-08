@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
@@ -12,25 +13,51 @@ class TransactionController extends Controller
     {
         $query = Transaction::where('user_id', Auth::id());
 
-        // Filter by date range
+        $titles = [
+            'Food',
+            'Shopping',
+            'Salary',
+            'Transport',
+            'Bills',
+            'Entertainment',
+            'Groceries',
+            'Others'
+        ];
+
         if ($request->start_date && $request->end_date) {
-            $query->whereBetween('date', [$request->start_date, $request->end_date]);
+            $start = Carbon::parse($request->start_date);
+            $end = Carbon::parse($request->end_date);
+        } else {
+            $month = $request->input('month', Carbon::now()->format('Y-m'));
+            $start = Carbon::parse($month)->startOfMonth();
+            $end = Carbon::parse($month)->endOfMonth();
         }
 
-        // Filter by transaction type (income/outcome)
+        $query->whereBetween('date', [$start, $end]);
+
         if ($request->filled('type')) {
             $query->where('type', $request->type);
         }
 
-        // Filter by category (title)
         if ($request->filled('title')) {
             $query->where('title', $request->title);
         }
 
-        $transactions = $query->orderBy('date', 'desc')->paginate(15); // 10 per page
+        $transactions = $query->orderBy('date', 'desc')->paginate(15);
 
-        return view('transactions.index', compact('transactions'));
+        $currentDate = Carbon::parse($start);
+        $prevMonth = $currentDate->copy()->subMonth();
+        $nextMonth = $currentDate->copy()->addMonth();
+
+        return view('transactions.index', [
+            'transactions' => $transactions,
+            'currentDate' => $currentDate,
+            'prevMonth' => $prevMonth,
+            'nextMonth' => $nextMonth,
+            'titles' => $titles,
+        ]);
     }
+
 
     public function store(Request $request)
     {

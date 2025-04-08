@@ -3,7 +3,7 @@
 @section('title', 'Personal Information')
 
 @section('content')
-    <h1 class="text-3xl font-semibold mb-6">Personal Information</h1>
+    <h1 class="text-3xl font-semibold mb-6">≡ Personal Information</h1>
 
     @if(session('success'))
         <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
