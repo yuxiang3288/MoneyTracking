@@ -47,6 +47,10 @@
         <p class="text-sm text-center text-gray-600 mt-4">
             Don't have an account?
             <a href="{{ route('register') }}" class="text-blue-600 hover:underline">Register here</a>
+            <span class="mx-2">|</span>
+            <a href="{{ route('password.request') }}" class="text-red-600 hover:underline">
+                Forgot Password?
+            </a>
         </p>
     </div>
 
