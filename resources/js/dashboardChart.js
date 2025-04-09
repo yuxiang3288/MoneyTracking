@@ -64,13 +64,29 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Doughnut
+    const spent = yearlySpending;
+    const earned = yearlyEarning;
+
+    let chartData = [];
+    let chartLabels = ['Spent', 'Remaining'];
+    let chartColors = [];
+
+    if (earned <= 0 || spent >= earned) {
+        chartData = [1];
+        chartLabels = ['Spent'];
+        chartColors = ['rgb(239, 68, 68)'];
+    } else {
+        chartData = [spent, earned - spent];
+        chartColors = ['rgb(239, 68, 68)', 'rgba(34, 197, 94)'];
+    }
+
     new Chart(document.getElementById('totalChart'), {
         type: 'doughnut',
         data: {
-            labels: ['Spent', 'Remaining'],
+            labels: chartLabels,
             datasets: [{
-                data: [yearlySpending, yearlyEarning - yearlySpending],
-                backgroundColor: ['rgb(239, 68, 68)', 'rgba(34, 197, 94)']
+                data: chartData,
+                backgroundColor: chartColors
             }]
         },
         options: {

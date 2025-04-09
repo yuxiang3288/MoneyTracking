@@ -68,10 +68,6 @@ class DashboardController extends Controller
         $yearlySpending = $monthlySpending->sum(); // total outcome this year
         $yearlyEarning = $monthlyEarning->sum(); // total income this year
 
-        if($yearlyEarning < $yearlySpending ){
-            $yearlyEarning = $yearlySpending;
-        }
-
         $currency = Auth::user()->preferred_currency ?? 'USD';
         $symbol = currencySymbol($currency);
         return view('dashboard', compact('dailySpending', 'dailyEarning', 'monthlySpending', 'monthlyEarning', 'monthlyLabels', 'yearlySpending', 'yearlyEarning', 'symbol'));
